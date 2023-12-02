@@ -10,8 +10,11 @@ module Directors
 		def initialize(screen_width:, screen_height:, renderer:)
 			super
 
-			# ゲーム本編の次に遷移するシーンのディレクターオブジェクトを用意
-			self.next_director = EndingDirector.new(screen_width: screen_width, screen_height: screen_height, renderer: renderer)
+			#得点
+			self.point = 0
+
+			#終了時間
+			@time = 30
 
 			# ゲーム本編の登場オブジェクト群を生成
 			create_objects
@@ -64,6 +67,8 @@ module Directors
 			self.camera.rotate_x(-CAMERA_ROTATE_SPEED_X) if self.renderer.window.key_down?(GLFW_KEY_DOWN)
 			self.camera.rotate_y(CAMERA_ROTATE_SPEED_Y) if self.renderer.window.key_down?(GLFW_KEY_LEFT)
 			self.camera.rotate_y(-CAMERA_ROTATE_SPEED_Y) if self.renderer.window.key_down?(GLFW_KEY_RIGHT)
+
+			self.check_finish?
 		end
 
 		# キー押下（単発）時のハンドリング
@@ -71,7 +76,6 @@ module Directors
 			case glfw_key
 				# ESCキー押下でエンディングに無理やり遷移
 				when GLFW_KEY_ESCAPE
-					puts "シーン遷移 → EndingDirector"
 					transition_to_next_director
 
 				# SPACEキー押下で弾丸を発射
@@ -111,15 +115,22 @@ module Directors
 		# 弾丸と敵の当たり判定
 		def hit_any_enemies(bullet)
 			return if bullet.expired
-
 			@enemies.each do |enemy|
 				next if enemy.expired
 				distance = bullet.position.distance_to(enemy.position)
 				if distance < 0.2
-					puts "Hit!"
 					bullet.expired = true
 					enemy.expired = true
+					self.point += 10
 				end
+			end
+		end
+
+		def check_finish?
+			if @frame_counter == @time
+				p self.point
+				self.next_director = EndingDirector.new(screen_width: screen_width, screen_height: screen_height, renderer: renderer, point: self.point)
+				transition_to_next_director 
 			end
 		end
 	end

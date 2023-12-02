@@ -4,12 +4,13 @@ module Directors
 	# エンディング画面用ディレクター
 	class EndingDirector < Base
 		# 初期化
-		def initialize(screen_width:, screen_height:, renderer:)
+		def initialize(screen_width:, screen_height:, renderer:, point:)
 			super
 
 			# テキスト表示用パネルを生成し、カメラから程よい距離に配置する
-			@description = AnimatedPanel.new(width: 1, height: 0.25, start_frame: 15, map: TextureFactory.create_ending_description)
-			@description.mesh.position.z = -0.5
+			@description = Panel.new(width: 0.25, height: 0.25,  map: TextureFactory.create_score_description)
+      		@description.mesh.position.y = 0
+      		@description.mesh.position.z = -0.5
 			self.scene.add(@description.mesh)
 		end
 
