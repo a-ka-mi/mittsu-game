@@ -31,4 +31,12 @@ class TextureFactory
 	def self.create_ending_description
 		Mittsu::ImageUtils.load_texture("images/ending_description.png")
 	end
+
+	def self.create_score_description
+		Mittsu::ImageUtils.load_texture("images/score.png")
+	end
+
+	def self.create_number_description(num)
+		Mittsu::ImageUtils.load_texture("images/string_#{num}.png")
+	end
 end

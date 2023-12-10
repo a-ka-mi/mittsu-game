@@ -1,10 +1,10 @@
 module Directors
 	# ディレクターの共通クラス
 	class Base
-		attr_accessor :scene, :camera, :renderer, :current_director, :next_director, :screen_width, :screen_height
+		attr_accessor :scene, :camera, :renderer, :current_director, :next_director, :screen_width, :screen_height, :point
 
 		# 初期化
-		def initialize(screen_width:, screen_height:, renderer:, fov: 75.0)
+		def initialize(screen_width:, screen_height:, renderer:, fov: 75.0, point: 0)
 			# current_directorがデフォルトで自分自身を返すように設定
 			self.current_director = self
 			self.renderer = renderer
@@ -17,6 +17,9 @@ module Directors
 			# 当該ディレクターが扱うシーンとカメラを作成
 			self.scene = Mittsu::Scene.new
 			self.camera = Mittsu::PerspectiveCamera.new(fov, aspect, 0.1, 1000.0)
+
+			#得点
+			self.point = point
 		end
 
 		# 1フレーム分の進行処理
