@@ -26,8 +26,8 @@ module Directors
 		def on_key_pressed(glfw_key:)
 			case glfw_key
 				# ESCキー押下で終了する
-				when GLFW_KEY_ESCAPE
-					puts "クリア!!"
+				when GLFW_KEY_SPACE 
+					self.next_director = Directors::TitleDirector.new(screen_width: SCREEN_WIDTH, screen_height: SCREEN_HEIGHT, renderer: renderer)
 					transition_to_next_director # self.next_directorがセットされていないのでメインループが終わる
 			end
 		end

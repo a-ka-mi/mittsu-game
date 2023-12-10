@@ -34,9 +34,6 @@ module Directors
 
 		# １フレーム分の進行処理
 		def play
-			# 地球を少しずつ回転させ、大気圏内を飛行してる雰囲気を醸し出す
-			@earth.rotate_x(0.002)
-
 			# 現在発射済みの弾丸を一通り動かす
 			@bullets.each(&:play)
 
@@ -92,11 +89,10 @@ module Directors
 			@sun = LightFactory.create_sun_light
 			self.scene.add(@sun)
 
-			# 地球を作成し、カメラ位置（原点）に対して大気圏を飛行してるっぽく見える位置に移動させる
-			@earth = MeshFactory.create_earth
-			@earth.position.y = -0.9
-			@earth.position.z = -0.8
-			self.scene.add(@earth)
+			@wall = MeshFactory.create_wall
+			@wall.position.y = -0.9
+			@wall.position.z = -0.8
+      		self.scene.add(@wall)
 		end
 
 		# 弾丸発射
