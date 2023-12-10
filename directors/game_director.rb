@@ -89,7 +89,7 @@ module Directors
 			@sun = LightFactory.create_sun_light
 			self.scene.add(@sun)
 
-			@wall = MeshFactory.create_wall
+			@wall = MeshFactory.create_base
 			@wall.position.y = -0.9
 			@wall.position.z = -0.8
       		self.scene.add(@wall)
