@@ -33,9 +33,9 @@ class MeshFactory
 		Mittsu::Mesh.new(geometry, material)
 	end
 
-	def self.create_wall
-		geometry = Mittsu::BoxGeometry.new(10, 10, 10)
-		material = Mittsu::MeshBasicMaterial.new(color: 0xffffff)
+	def self.create_base
+		geometry = Mittsu::BoxGeometry.new(4, 1, 4)
+		material = generate_material(:basic, 0xf0f8ff, nil, nil)
 		Mittsu::Mesh.new(geometry, material)
 	end
 
