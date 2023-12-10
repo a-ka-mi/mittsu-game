@@ -14,7 +14,7 @@ module Directors
 			self.point = 0
 
 			#終了時間
-			@time = 30
+			@time = 1500
 
 			# ゲーム本編の登場オブジェクト群を生成
 			create_objects
@@ -128,7 +128,6 @@ module Directors
 
 		def check_finish?
 			if @frame_counter == @time
-				p self.point
 				self.next_director = EndingDirector.new(screen_width: screen_width, screen_height: screen_height, renderer: renderer, point: self.point)
 				transition_to_next_director 
 			end

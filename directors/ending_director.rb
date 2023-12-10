@@ -8,8 +8,8 @@ module Directors
 			super
 
 			self.point = point
-
-			@point = []
+			@point_digit = []
+			@string_num = []
 
 			# テキスト表示用パネルを生成し、カメラから程よい距離に配置する
 			draw_score
@@ -19,6 +19,7 @@ module Directors
 		def play
 			# テキスト表示用パネルを1フレーム分アニメーションさせる
 			@description.play
+			@string_num.each {|dig| dig.play}
 		end
 
 		# キー押下（単発）時のハンドリング
@@ -32,22 +33,27 @@ module Directors
 		end
 
 		def draw_score
+			count_digit
 			@description = Panel.new(width: 0.25, height: 0.25,  map: TextureFactory.create_score_description)
 			@description.mesh.position.x = -0.3
       		@description.mesh.position.y = 0
       		@description.mesh.position.z = -0.5
 			self.scene.add(@description.mesh)
-			@point.each do |num|
-				string_num = Panel.new(width: 0.25, height: 0.25,  map: TextureFactory.create_number_description(num.to_i))
-				self.scene.add(@description.mesh)
+			@point_digit.each_with_index do |dig,n|
+				@string_num[n] = Panel.new(width: 0.1, height: 0.13,  map: TextureFactory.create_number_description(dig.to_i))
+				@string_num[n].mesh.position.x = @description.mesh.position.x + 0.1 + 0.1 * (n + 1)
+				@string_num[n].mesh.position.y = -0.01
+				@string_num[n].mesh.position.z = -0.5
+				self.scene.add(@string_num[n].mesh)
+				p @string_num[n].mesh.position.x
 			end
 
 		end
 
 		def count_digit
 			count = self.point.to_s.length
-			count.times{|n|
-				@point << (self.point/10.pow(n))%10
+			(count - 1).downto(0){|n|
+				@point_digit << (self.point / 10.pow(n))%10
 			}
 		end
 	end
