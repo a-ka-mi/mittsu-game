@@ -28,7 +28,7 @@ module Directors
 				# ESCキー押下で終了する
 				when GLFW_KEY_SPACE 
 					self.next_director = Directors::TitleDirector.new(screen_width: SCREEN_WIDTH, screen_height: SCREEN_HEIGHT, renderer: renderer)
-					transition_to_next_director # self.next_directorがセットされていないのでメインループが終わる
+					transition_to_next_director
 			end
 		end
 

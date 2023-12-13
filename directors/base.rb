@@ -30,6 +30,11 @@ module Directors
 
 		# キーボードのキー押下（単発）時のイベントハンドラ
 		def on_key_pressed(glfw_key:)
+			case glfw_key
+				# ESCキー押下でエンディングに無理やり遷移
+				when GLFW_KEY_ESCAPE
+					transition_to_next_director
+			end
 		end
 
 		# 次のシーンに遷移する

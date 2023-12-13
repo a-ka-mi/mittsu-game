@@ -74,7 +74,6 @@ module Directors
 				# ESCキー押下でエンディングに無理やり遷移
 				when GLFW_KEY_ESCAPE
 					transition_to_next_director
-
 				# SPACEキー押下で弾丸を発射
 				when GLFW_KEY_SPACE
 					shoot

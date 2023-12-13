@@ -2,7 +2,7 @@ require_relative 'base'
 
 module Directors
   # タイトル画面用ディレクター
-  class TitleDirector < Base
+  class StartDirector < Base
     # 初期化
     def initialize(screen_width:, screen_height:, renderer:)
       super
@@ -25,12 +25,13 @@ module Directors
 
     # キー押下（単発）時のハンドリング
     def on_key_pressed(glfw_key:)
-      super
-      case glfw_key
-        when GLFW_KEY_SPACE
-          self.next_director = StartDirector.new(screen_width: screen_width, screen_height: screen_height, renderer: renderer)
-          transition_to_next_director
-      end
+        super
+        case glfw_key
+            # SPACEキー押下で弾丸を発射
+            when GLFW_KEY_SPACE
+                self.next_director = GameDirector.new(screen_width: screen_width, screen_height: screen_height, renderer: renderer)
+                transition_to_next_director
+        end
     end
 
     private
