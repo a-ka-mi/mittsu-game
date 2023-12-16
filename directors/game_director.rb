@@ -24,6 +24,7 @@ module Directors
 
 			# 現在のフレーム数をカウントする
 			@frame_counter = 0
+			
 
 			@camera_rotate_x = 0.0
 			@camera_rotate_y = 0.0
@@ -80,8 +81,8 @@ module Directors
 					#変位
 					dy = @current_position_y - position.y
 					dx = @current_position_x - position.x
-					self.camera.rotate_x(dy * 0.008)
-					self.camera.rotate_y(dx * 0.008)
+					self.camera.rotation.x += dy * 0.008
+					self.camera.rotation.y += dx * 0.008
 					#self.camera.position.x = ((position.x/SCREEN_WIDTH)* 0.2 - 0.1) * 5.0
 					#self.camera.position.y = ((position.y/SCREEN_HEIGHT)*-0.2 + 0.1) * 5.0
 				end
@@ -92,7 +93,7 @@ module Directors
 				#self.camera.position.x = ((position.x/SCREEN_WIDTH)* 0.2 - 0.1) * 5.0
 				#self.camera.rotate_y(CAMERA_ROTATE_SPEED_Y)
 				#self.camera.position.y = ((position.y/SCREEN_HEIGHT)*-0.2 + 0.1) * 5.0
-				puts "position.x:#{position.x}, position.y:#{position.y}"
+				#puts "position.x:#{position.x}, position.y:#{position.y}"
 			end
 
 			
@@ -113,7 +114,7 @@ module Directors
 			case button
 				when GLFW_MOUSE_BUTTON_LEFT
 				shoot
-				puts "test1"
+				#puts "test1"
 
 			end
 		end
