@@ -39,4 +39,8 @@ class TextureFactory
 	def self.create_number_description(num)
 		Mittsu::ImageUtils.load_texture("images/string_#{num}.png")
 	end
+
+	def self.create_image_description(str)
+		Mittsu::ImageUtils.load_texture("images/#{str}")
+	end
 end

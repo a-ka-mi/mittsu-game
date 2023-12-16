@@ -37,6 +37,15 @@ module Directors
 			end
 		end
 
+		def on_mouse_button_pressed(button:)
+		end	
+
+		def on_mouse_move
+		end
+
+		def on_resize
+		end
+
 		# 次のシーンに遷移する
 		# current_directorを次のシーンの担当ディレクターオブジェクトに差し替える。
 		# メインループ側でcurrent_directorを毎フレーム参照しているので、これによって次のフレーム描画から

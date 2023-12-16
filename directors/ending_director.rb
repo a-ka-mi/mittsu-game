@@ -46,9 +46,7 @@ module Directors
 				@string_num[n].mesh.position.y = -0.01
 				@string_num[n].mesh.position.z = -0.5
 				self.scene.add(@string_num[n].mesh)
-				p @string_num[n].mesh.position.x
 			end
-
 		end
 
 		def count_digit

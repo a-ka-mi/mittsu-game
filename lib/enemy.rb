@@ -9,10 +9,11 @@ class Enemy
 		y ||= rand(10) / 10.0 + 1
 		z ||= rand(10) / 10.0 + 3
 		pos = Mittsu::Vector3.new(x, y, -z)
-		self.mesh = MeshFactory.create_enemy(r: 0.2, color: 0x00ff00)
+		self.mesh = MeshFactory.create_enemy(r: 0.2, color: 0x00ffff)
 		self.mesh.position = pos
 		self.expired = false
 	end
+
 
 	# メッシュの現在位置を返す
 	def position
@@ -25,16 +26,16 @@ class Enemy
 		dy = rand(3)
 		case dx
 		when 1
-			self.mesh.position.x += 0.01
-		when 2
-			self.mesh.position.x -= 0.01
+            self.mesh.position.x += 0.00
+        when 2
+            self.mesh.position.x -= 0.00
 		end
 
-		case dy
-		when 1
-			self.mesh.position.y += 0.01
-		when 2
-			self.mesh.position.y -= 0.01
-		end
+        case dy
+        when 1
+            self.mesh.position.y += 0.00
+        when 2
+            self.mesh.position.y -= 0.00
+        end
 	end
 end
