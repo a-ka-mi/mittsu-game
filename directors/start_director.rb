@@ -12,15 +12,7 @@ module Directors
 
     # １フレーム分の進行処理
     def play
-      # 地球を斜め方向に回転させる
-      @earth.rotate_x(0.001)
-      @earth.rotate_y(0.001)
-
-      # タイトル文字パネル群をそれぞれ１フレーム分進行させる
-      @panels.each(&:play)
-
-      # 説明用文字パネルを１フレーム分進行させる
-      @description.play
+      
     end
 
     # キー押下（単発）時のハンドリング
@@ -39,27 +31,17 @@ module Directors
     # タイトル画面の登場オブジェクト群を生成
     def create_objects
       # 太陽光をセット
-      @sun = LightFactory.create_sun_light
+		  @sun = LightFactory.create_sun_light
       self.scene.add(@sun)
-
-      # 背景用の地球を作成
-      @earth = MeshFactory.create_earth
-      @earth.position.z = -2
-      self.scene.add(@earth)
-
-      # タイトル文字パネルの初期表示位置（X座標）を定義
-      start_x = -0.35
-
-      # RubyCampの8文字を、1文字1アニメーションパネルとして作成し、表示開始タイミングを微妙にずらす
-      %w(R u b y C a m p).each_with_index do |char, idx|
-        create_title_logo(char, start_x + (idx * 0.1), idx * 2)
-      end
-
-      # 説明文字列用のパネル作成
-      # タイトル画面表示開始から180フレーム経過で表示するように調整
-      # 位置は適当に決め打ち
-      @description = Panel.new(width: 1, height: 0.25, start_frame: 180, map: TextureFactory.create_title_description)
-      @description.mesh.position.y = -0.2
+      # 床生成
+		  @wall = MeshFactory.create_base
+		  @wall.position.y = -0.9
+		  @wall.position.z = -0.8
+      self.scene.add(@wall)
+      # タイトル
+      @description = Panel.new(width: 0.25, height: 0.25,  map: TextureFactory.create_score_description)
+      @description.mesh.position.x = -0.3
+      @description.mesh.position.y = 0
       @description.mesh.position.z = -0.5
       self.scene.add(@description.mesh)
     end

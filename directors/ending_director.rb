@@ -24,10 +24,11 @@ module Directors
 
 		# キー押下（単発）時のハンドリング
 		def on_key_pressed(glfw_key:)
+			super
 			case glfw_key
-				# ESCキー押下で終了する
+				# spaceキー押下でスタートへ遷移する
 				when GLFW_KEY_SPACE 
-					self.next_director = Directors::TitleDirector.new(screen_width: SCREEN_WIDTH, screen_height: SCREEN_HEIGHT, renderer: renderer)
+					self.next_director = Directors::StarteDirector.new(screen_width: SCREEN_WIDTH, screen_height: SCREEN_HEIGHT, renderer: renderer)
 					transition_to_next_director
 			end
 		end
