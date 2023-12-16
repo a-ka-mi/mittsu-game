@@ -97,14 +97,13 @@ module Directors
 				#puts "position.x:#{position.x}, position.y:#{position.y}"
 			end
 
-			
-
 			self.check_finish?
 		end
 	
 
 		# キー押下（単発）時のハンドリング
 		def on_key_pressed(glfw_key:)
+			super
 			case glfw_key
 				# ESCキー押下でエンディングに無理やり遷移
 				when GLFW_KEY_ESCAPE
@@ -118,7 +117,6 @@ module Directors
 				when GLFW_MOUSE_BUTTON_LEFT
 				shoot
 				#puts "test1"
-
 			end
 		end
 

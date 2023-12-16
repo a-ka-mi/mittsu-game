@@ -24,11 +24,12 @@ module Directors
 
 		# キー押下（単発）時のハンドリング
 		def on_key_pressed(glfw_key:)
+			super
 			case glfw_key
-				# ESCキー押下で終了する
+				# spaceキー押下でスタートへ遷移する
 				when GLFW_KEY_SPACE 
-					self.next_director = Directors::TitleDirector.new(screen_width: SCREEN_WIDTH, screen_height: SCREEN_HEIGHT, renderer: renderer)
-					transition_to_next_director # self.next_directorがセットされていないのでメインループが終わる
+					self.next_director = Directors::StarteDirector.new(screen_width: SCREEN_WIDTH, screen_height: SCREEN_HEIGHT, renderer: renderer)
+					transition_to_next_director
 			end
 		end
 
@@ -45,9 +46,7 @@ module Directors
 				@string_num[n].mesh.position.y = -0.01
 				@string_num[n].mesh.position.z = -0.5
 				self.scene.add(@string_num[n].mesh)
-				p @string_num[n].mesh.position.x
 			end
-
 		end
 
 		def count_digit
