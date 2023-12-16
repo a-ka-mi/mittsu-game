@@ -6,8 +6,7 @@ module Directors
     # 初期化
     def initialize(screen_width:, screen_height:, renderer:)
       super
-
-      @string_num = []
+      # スタートまでのカウント用
       @frame = 0
       @count = 0
       @start = false
@@ -55,17 +54,6 @@ module Directors
       @description.mesh.position.y = 0.1
       @description.mesh.position.z = -0.4
       self.scene.add(@description.mesh)
-    end
-
-    # タイトルロゴ用アニメーションパネル作成
-    # タイトル画面の表示開始から30+delay_framesのフレームが経過してから、120フレーム掛けてアニメーションするよう設定
-    def create_title_logo(char, x_pos, delay_frames)
-      panel = AnimatedPanel.new(start_frame: 30 + delay_frames, duration: 120, map: TextureFactory.create_string(char))
-      panel.mesh.position.x = x_pos
-      panel.mesh.position.z = -0.5
-      self.scene.add(panel.mesh)
-      @panels ||= []
-      @panels << panel
     end
   end
 end
