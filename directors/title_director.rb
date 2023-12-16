@@ -32,7 +32,6 @@ module Directors
       case glfw_key
         # SPACEキー押下で弾丸を発射
         when GLFW_KEY_SPACE
-          puts "シーン遷移 → GameDirector"
           transition_to_next_director
       end
     end
