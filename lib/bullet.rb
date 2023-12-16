@@ -6,6 +6,7 @@ class Bullet
 	FRAME_COUNT_UPPER_LIMIT = 4 * 60
 
 
+
 	# 初期化
 	# 進行方向を表す単位ベクトルを受領する
 	def initialize(forward_vector)

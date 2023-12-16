@@ -27,9 +27,13 @@ module Directors
 
 			# 現在のフレーム数をカウントする
 			@frame_counter = 0
+			
 
 			@camera_rotate_x = 0.0
 			@camera_rotate_y = 0.0
+
+			@current_position_x=0.0
+			@current_position_y=0.0
 		end
 
 		# １フレーム分の進行処理
@@ -61,13 +65,43 @@ module Directors
 
 			@frame_counter += 1
 
+			#camera.position.z = 0.05
+
+			#self.camera.rotate_x(CAMERA_ROTATE_SPEED_X) if self.renderer.window.on_mouse_move 
+			#self.camera.position.x = ((position.x/SCREEN_WIDTH)*0.002-0.001) * 5.0
+			#self.camera.rotate_y(CAMERA_ROTATE_SPEED_Y) if self.renderer.window.on_mouse_move 
+			#self.camera.position.y = ((position.y/SCREEN_HEIGHT)*-0.002+0.001) * 5.0
+
 			self.camera.rotate_x(CAMERA_ROTATE_SPEED_X) if self.renderer.window.key_down?(GLFW_KEY_UP)
 			self.camera.rotate_x(-CAMERA_ROTATE_SPEED_X) if self.renderer.window.key_down?(GLFW_KEY_DOWN)
 			self.camera.rotate_y(CAMERA_ROTATE_SPEED_Y) if self.renderer.window.key_down?(GLFW_KEY_LEFT)
 			self.camera.rotate_y(-CAMERA_ROTATE_SPEED_Y) if self.renderer.window.key_down?(GLFW_KEY_RIGHT)
 
+			self.renderer.window.on_mouse_move do |position|
+				if @current_position_x != 0.0 && @current_position_y != 0.0
+					#変位
+					dy = @current_position_y - position.y
+					dx = @current_position_x - position.x
+					self.camera.rotation.x += dy * 0.008
+					self.camera.rotation.y += dx * 0.008
+					#self.camera.position.x = ((position.x/SCREEN_WIDTH)* 0.2 - 0.1) * 5.0
+					#self.camera.position.y = ((position.y/SCREEN_HEIGHT)*-0.2 + 0.1) * 5.0
+				end
+
+				@current_position_x=position.x
+				@current_position_y=position.y
+				#self.camera.rotate_x(CAMERA_ROTATE_SPEED_X)
+				#self.camera.position.x = ((position.x/SCREEN_WIDTH)* 0.2 - 0.1) * 5.0
+				#self.camera.rotate_y(CAMERA_ROTATE_SPEED_Y)
+				#self.camera.position.y = ((position.y/SCREEN_HEIGHT)*-0.2 + 0.1) * 5.0
+				#puts "position.x:#{position.x}, position.y:#{position.y}"
+			end
+
+			
+
 			self.check_finish?
 		end
+	
 
 		# キー押下（単発）時のハンドリング
 		def on_key_pressed(glfw_key:)
@@ -75,10 +109,16 @@ module Directors
 				# ESCキー押下でエンディングに無理やり遷移
 				when GLFW_KEY_ESCAPE
 					transition_to_next_director
+			end
+		end
+		
+		#左クリックで射撃
+		def on_mouse_button_pressed(button:)
+			case button
+				when GLFW_MOUSE_BUTTON_LEFT
+				shoot
+				#puts "test1"
 
-				# SPACEキー押下で弾丸を発射
-				when GLFW_KEY_SPACE
-					shoot
 			end
 		end
 
@@ -114,8 +154,8 @@ module Directors
 			@enemies.each do |enemy|
 				next if enemy.expired
 				distance = bullet.position.distance_to(enemy.position)
-				if distance < 0.27
-					puts "Hit!"
+
+				if distance < 0.2
 					bullet.expired = true
 					enemy.expired = true
 					self.point += 10
