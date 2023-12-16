@@ -63,20 +63,13 @@ module Directors
 				self.scene.add(enemy.mesh)
 			end
 
-			@frame_counter += 1
-
-			#camera.position.z = 0.05
-
-			#self.camera.rotate_x(CAMERA_ROTATE_SPEED_X) if self.renderer.window.on_mouse_move 
-			#self.camera.position.x = ((position.x/SCREEN_WIDTH)*0.002-0.001) * 5.0
-			#self.camera.rotate_y(CAMERA_ROTATE_SPEED_Y) if self.renderer.window.on_mouse_move 
-			#self.camera.position.y = ((position.y/SCREEN_HEIGHT)*-0.002+0.001) * 5.0
-
+			# 矢印キーでの操作
 			self.camera.rotate_x(CAMERA_ROTATE_SPEED_X) if self.renderer.window.key_down?(GLFW_KEY_UP)
 			self.camera.rotate_x(-CAMERA_ROTATE_SPEED_X) if self.renderer.window.key_down?(GLFW_KEY_DOWN)
 			self.camera.rotate_y(CAMERA_ROTATE_SPEED_Y) if self.renderer.window.key_down?(GLFW_KEY_LEFT)
 			self.camera.rotate_y(-CAMERA_ROTATE_SPEED_Y) if self.renderer.window.key_down?(GLFW_KEY_RIGHT)
 
+			# マウスでの操作
 			self.renderer.window.on_mouse_move do |position|
 				if @current_position_x != 0.0 && @current_position_y != 0.0
 					#変位
@@ -84,19 +77,13 @@ module Directors
 					dx = @current_position_x - position.x
 					self.camera.rotation.x += dy * 0.008
 					self.camera.rotation.y += dx * 0.008
-					#self.camera.position.x = ((position.x/SCREEN_WIDTH)* 0.2 - 0.1) * 5.0
-					#self.camera.position.y = ((position.y/SCREEN_HEIGHT)*-0.2 + 0.1) * 5.0
 				end
 
 				@current_position_x=position.x
 				@current_position_y=position.y
-				#self.camera.rotate_x(CAMERA_ROTATE_SPEED_X)
-				#self.camera.position.x = ((position.x/SCREEN_WIDTH)* 0.2 - 0.1) * 5.0
-				#self.camera.rotate_y(CAMERA_ROTATE_SPEED_Y)
-				#self.camera.position.y = ((position.y/SCREEN_HEIGHT)*-0.2 + 0.1) * 5.0
-				#puts "position.x:#{position.x}, position.y:#{position.y}"
 			end
 
+			@frame_counter += 1
 			self.check_finish?
 		end
 	
@@ -105,9 +92,8 @@ module Directors
 		def on_key_pressed(glfw_key:)
 			super
 			case glfw_key
-				# ESCキー押下でエンディングに無理やり遷移
-				when GLFW_KEY_ESCAPE
-					transition_to_next_director
+				when GLFW_KEY_SPACE
+					shoot
 			end
 		end
 		
@@ -116,7 +102,6 @@ module Directors
 			case button
 				when GLFW_MOUSE_BUTTON_LEFT
 				shoot
-				#puts "test1"
 			end
 		end
 
