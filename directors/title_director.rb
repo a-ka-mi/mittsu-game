@@ -30,6 +30,14 @@ module Directors
       end
     end
 
+    def on_mouse_button_pressed(button:)
+			case button
+				when GLFW_MOUSE_BUTTON_LEFT
+          self.next_director = StartDirector.new(screen_width: screen_width, screen_height: screen_height, renderer: renderer)
+          transition_to_next_director
+			end
+		end
+
     private
 
     # タイトル画面の登場オブジェクト群を生成

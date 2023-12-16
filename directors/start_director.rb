@@ -36,6 +36,15 @@ module Directors
         end
     end
 
+    def on_mouse_button_pressed(button:)
+			case button
+				when GLFW_MOUSE_BUTTON_LEFT
+          self.next_director = GameDirector.new(screen_width: screen_width, screen_height: screen_height, renderer: renderer)
+          @start = true
+          @count = @frame
+			end
+		end
+
     private
 
     # タイトル画面の登場オブジェクト群を生成
