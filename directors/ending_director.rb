@@ -28,7 +28,7 @@ module Directors
 			case glfw_key
 				# spaceキー押下でスタートへ遷移する
 				when GLFW_KEY_SPACE 
-					self.next_director = Directors::StarteDirector.new(screen_width: SCREEN_WIDTH, screen_height: SCREEN_HEIGHT, renderer: renderer)
+					self.next_director = Directors::StartDirector.new(screen_width: SCREEN_WIDTH, screen_height: SCREEN_HEIGHT, renderer: renderer)
 					transition_to_next_director
 			end
 		end

@@ -43,9 +43,6 @@ module Directors
       @earth.position.z = -2
       self.scene.add(@earth)
 
-      # タイトル文字パネルの初期表示位置（X座標）を定義
-      start_x = -0.35
-
       # 説明文字列用のパネル作成
       # タイトル画面表示開始から180フレーム経過で表示するように調整
       # 位置は適当に決め打ち
