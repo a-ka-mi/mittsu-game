@@ -138,7 +138,7 @@ module Directors
 				next if enemy.expired
 				distance = bullet.position.distance_to(enemy.position)
 
-				if distance < 0.2
+				if distance < 0.22
 					bullet.expired = true
 					enemy.expired = true
 					self.point += 10
