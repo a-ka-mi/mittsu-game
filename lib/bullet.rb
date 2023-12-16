@@ -2,8 +2,8 @@
 class Bullet
 	attr_accessor :mesh, :expired
 
-	SPEED = -0.05 # 弾丸の速度
-	FRAME_COUNT_UPPER_LIMIT = 3 * 60
+	SPEED = -0.5 # 弾丸の速度
+	FRAME_COUNT_UPPER_LIMIT = 4 * 60
 
 	# 初期化
 	# 進行方向を表す単位ベクトルを受領する

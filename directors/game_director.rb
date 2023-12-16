@@ -52,8 +52,9 @@ module Directors
 			rejected_enemies.each{|enemy| self.scene.remove(enemy.mesh) }
 
 			# 一定のフレーム数経過毎に敵キャラを出現させる
-			if @frame_counter % 180 == 0
+			if @frame_counter % 60 == 0
 				enemy = Enemy.new
+
 				@enemies << enemy
 				self.scene.add(enemy.mesh)
 			end
@@ -92,7 +93,7 @@ module Directors
 			@earth = MeshFactory.create_earth
 			@earth.position.y = -0.9
 			@earth.position.z = -0.8
-			self.scene.add(@earth)
+
 		end
 
 		# 弾丸発射
@@ -115,7 +116,7 @@ module Directors
 			@enemies.each do |enemy|
 				next if enemy.expired
 				distance = bullet.position.distance_to(enemy.position)
-				if distance < 0.2
+				if distance < 0.27
 					puts "Hit!"
 					bullet.expired = true
 					enemy.expired = true
