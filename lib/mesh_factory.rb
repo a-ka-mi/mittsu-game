@@ -33,6 +33,12 @@ class MeshFactory
 		Mittsu::Mesh.new(geometry, material)
 	end
 
+	def self.create_base
+		geometry = Mittsu::BoxGeometry.new(4, 1, 4)
+		material = generate_material(:basic, 0xf0f8ff, nil, nil)
+		Mittsu::Mesh.new(geometry, material)
+	end
+
 	# 汎用マテリアル生成メソッド
 	def self.generate_material(type, color, map, normal_map)
 		mat = nil

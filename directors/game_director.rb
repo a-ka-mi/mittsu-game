@@ -10,8 +10,11 @@ module Directors
 		def initialize(screen_width:, screen_height:, renderer:)
 			super
 
-			# ゲーム本編の次に遷移するシーンのディレクターオブジェクトを用意
-			self.next_director = EndingDirector.new(screen_width: screen_width, screen_height: screen_height, renderer: renderer)
+			#得点
+			self.point = 0
+
+			#終了時間
+			@time = 1500
 
 			# ゲーム本編の登場オブジェクト群を生成
 			create_objects
@@ -35,9 +38,6 @@ module Directors
 
 		# １フレーム分の進行処理
 		def play
-			# 地球を少しずつ回転させ、大気圏内を飛行してる雰囲気を醸し出す
-			@earth.rotate_x(0.002)
-
 			# 現在発射済みの弾丸を一通り動かす
 			@bullets.each(&:play)
 
@@ -76,6 +76,7 @@ module Directors
 			self.camera.rotate_y(CAMERA_ROTATE_SPEED_Y) if self.renderer.window.key_down?(GLFW_KEY_LEFT)
 			self.camera.rotate_y(-CAMERA_ROTATE_SPEED_Y) if self.renderer.window.key_down?(GLFW_KEY_RIGHT)
 
+
 			self.renderer.window.on_mouse_move do |position|
 				if @current_position_x != 0.0 && @current_position_y != 0.0
 					#変位
@@ -97,14 +98,16 @@ module Directors
 			end
 
 			
-		end	
+	
+			self.check_finish?
+		end
+	
 
 		# キー押下（単発）時のハンドリング
 		def on_key_pressed(glfw_key:)
 			case glfw_key
 				# ESCキー押下でエンディングに無理やり遷移
 				when GLFW_KEY_ESCAPE
-					puts "シーン遷移 → EndingDirector"
 					transition_to_next_director
 			end
 		end
@@ -127,11 +130,10 @@ module Directors
 			@sun = LightFactory.create_sun_light
 			self.scene.add(@sun)
 
-			# 地球を作成し、カメラ位置（原点）に対して大気圏を飛行してるっぽく見える位置に移動させる
-			@earth = MeshFactory.create_earth
-			@earth.position.y = -0.9
-			@earth.position.z = -0.8
-			self.scene.add(@earth)
+			@wall = MeshFactory.create_base
+			@wall.position.y = -0.9
+			@wall.position.z = -0.8
+      		self.scene.add(@wall)
 		end
 
 		# 弾丸発射
@@ -150,15 +152,21 @@ module Directors
 		# 弾丸と敵の当たり判定
 		def hit_any_enemies(bullet)
 			return if bullet.expired
-
 			@enemies.each do |enemy|
 				next if enemy.expired
 				distance = bullet.position.distance_to(enemy.position)
 				if distance < 0.2
-					puts "Hit!"
 					bullet.expired = true
 					enemy.expired = true
+					self.point += 10
 				end
+			end
+		end
+
+		def check_finish?
+			if @frame_counter == @time
+				self.next_director = EndingDirector.new(screen_width: screen_width, screen_height: screen_height, renderer: renderer, point: self.point)
+				transition_to_next_director 
 			end
 		end
 	end
