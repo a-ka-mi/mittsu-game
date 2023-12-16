@@ -56,8 +56,9 @@ module Directors
 			rejected_enemies.each{|enemy| self.scene.remove(enemy.mesh) }
 
 			# 一定のフレーム数経過毎に敵キャラを出現させる
-			if @frame_counter % 180 == 0
+			if @frame_counter % 60 == 0
 				enemy = Enemy.new
+
 				@enemies << enemy
 				self.scene.add(enemy.mesh)
 			end
@@ -75,7 +76,6 @@ module Directors
 			self.camera.rotate_x(-CAMERA_ROTATE_SPEED_X) if self.renderer.window.key_down?(GLFW_KEY_DOWN)
 			self.camera.rotate_y(CAMERA_ROTATE_SPEED_Y) if self.renderer.window.key_down?(GLFW_KEY_LEFT)
 			self.camera.rotate_y(-CAMERA_ROTATE_SPEED_Y) if self.renderer.window.key_down?(GLFW_KEY_RIGHT)
-
 
 			self.renderer.window.on_mouse_move do |position|
 				if @current_position_x != 0.0 && @current_position_y != 0.0
@@ -98,7 +98,7 @@ module Directors
 			end
 
 			
-	
+
 			self.check_finish?
 		end
 	
@@ -129,7 +129,6 @@ module Directors
 			# 太陽光をセット
 			@sun = LightFactory.create_sun_light
 			self.scene.add(@sun)
-
 			@wall = MeshFactory.create_base
 			@wall.position.y = -0.9
 			@wall.position.z = -0.8
@@ -155,6 +154,7 @@ module Directors
 			@enemies.each do |enemy|
 				next if enemy.expired
 				distance = bullet.position.distance_to(enemy.position)
+
 				if distance < 0.2
 					bullet.expired = true
 					enemy.expired = true
